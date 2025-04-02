@@ -1,6 +1,10 @@
+document.addEventListener("DOMContentLoaded", function() {
+    checkLoginState();
+});
+
 window.fbAsyncInit = function() {
     FB.init({
-        appId: '1382753952722955',
+        appId: '3623273967970187',
         cookie: true,
         xfbml: true,
         version: 'v22.0'
@@ -26,7 +30,7 @@ function FBLogin() {
             console.log('Usuario canceló el inicio de sesión');
         }
     }, {
-        scope: 'public_profile,email'
+        scope: 'public_profile,user_photos,user_videos,user_posts,user_link'
     });
 }
 
@@ -41,27 +45,29 @@ function checkLoginState() {
 }
 
 function getUserInfo() {
-    FB.api('/me', {
-        fields: 'name,email,picture'
-    }, function(response) {
-        if (!response || response.error) {
-            console.log('Error obteniendo datos del usuario.');
-            return;
+    FB.getLoginStatus(function(response) {
+        if (response.status === 'connected') {
+            let accessToken = response.authResponse.accessToken;
+            FB.api('/me', { 
+                fields: 'id,name,picture,photos{images},videos{source},posts{message,created_time}', 
+                access_token: accessToken 
+            }, function(response) {
+                console.log("Respuesta de Facebook:", response);
+                if (!response || response.error) {
+                    console.log('Error obteniendo datos del usuario.');
+                    return;
+                }
+                user_datal = response;
+                console.log("Datos guardados en user_datal:", user_datal);
+            });
+        } else {
+            console.log('Usuario no autenticado.');
         }
-
-        // Mostrar los datos en el div #user-info
-        document.getElementById('user-info').innerHTML = `
-            <div class="card p-3">
-                <img src="${response.picture.data.url}" class="img-fluid rounded-circle mb-2" width="100">
-                <h4>${response.name}</h4>
-                <p>${response.email}</p>
-                <button class="btn btn-danger" onclick="logout()">Cerrar sesión</button>
-            </div>
-        `;
     });
 }
 
-// Función para cerrar sesión
+
+
 function logout() {
     FB.logout(function(response) {
         document.getElementById('user-info').innerHTML = '<p>Sesión cerrada.</p>';
