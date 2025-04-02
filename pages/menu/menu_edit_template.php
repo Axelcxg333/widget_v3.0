@@ -18,7 +18,7 @@
 <div class="tab-content" id="myTabContent">
     <div class="tab-pane fade show active" id="source" role="tabpanel" aria-labelledby="source-tab">
         <h3>Contenido de Source</h3>
-        <button type="button" class="btn btn-light" onclick="FBLogin()">
+        <button id="fb-login-btn" type="button" class="btn btn-light" onclick="FBLogin()">
             <i class="fa-brands fa-facebook" style="color: #009dff;"></i>
             Ingresar con Facebook
         </button>
@@ -33,9 +33,30 @@
                 <button onclick="get_template(3)">Facebook Posts</button>
                 <button onclick="get_template(4)">Facebook Videos</button>
             </div>
-            <button class="btn btn-success" onclick="get_menu('menu_edit')" style="height: fit-content;">
+            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#facebookModal" style="height: fit-content;">
                 Continuar con este diseño
             </button>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="facebookModal" tabindex="-1" aria-labelledby="facebookModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" style="color:black;">
+            <div class="modal-header">
+                <h5 class="modal-title" id="facebookModalLabel">Importa esto a tu proyecto</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <pre>
+                    &lt;div id="facebook-widget-container"&gt;&lt;/div&gt;
+                    &lt;script src="https://hertzst.com/axl/assets/js/widget_import.js"&gt;&lt;/script&gt;
+                </pre>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
         </div>
     </div>
 </div>
