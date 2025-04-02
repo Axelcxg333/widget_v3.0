@@ -26,6 +26,11 @@ function FBLogin() {
         if (response.authResponse) {
             console.log('Usuario inició sesión con éxito');
             checkLoginState();
+
+            
+            const loginButton = document.getElementById('fb-login-btn');
+            loginButton.innerHTML = `<i class="fa-brands fa-facebook" style="color: #009dff;"></i> Conectado`;
+            loginButton.disabled = true; 
         } else {
             console.log('Usuario canceló el inicio de sesión');
         }
